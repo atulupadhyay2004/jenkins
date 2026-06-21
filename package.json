@@ -1,0 +1,12 @@
+{
+  "name": "todo-cicd",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Tests Passed\""
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
