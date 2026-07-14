@@ -124,33 +124,3 @@ Below is the high-level architecture of the CI/CD pipeline:
 │ │
 └─────────────────────────────────────────────────────────────────────────────┘
 
----
-
-## 🔄 CI/CD Workflow
-
-This diagram illustrates the end-to-end flow from code commit to deployment:
-
-```mermaid
-flowchart TD
-    A[Developer pushes code to GitHub] --> B[GitHub Webhook triggers Jenkins]
-    B --> C[Jenkins Pipeline Starts]
-    C --> D[Stage 1: Checkout - Pull latest code]
-    D --> E[Stage 2: Install - Run npm install]
-    E --> F[Stage 3: Test - Run npm test]
-    F --> G{Tests Pass?}
-    G -->|No| H[Pipeline Fails - Notify Developer]
-    G -->|Yes| I[Stage 4: Build Docker Image]
-    I --> J[Stage 5: Push Image to Docker Hub]
-    J --> K[Stage 6: Deploy - Stop old container, run new one]
-    K --> L[Stage 7: Health Check - Verify /health endpoint]
-    L --> M{Health Check Pass?}
-    M -->|No| N[Pipeline Fails - Rollback?]
-    M -->|Yes| O[Stage 8: Smoke Test - Verify / and /health]
-    O --> P{Smoke Test Pass?}
-    P -->|No| Q[Pipeline Fails]
-    P -->|Yes| R[Stage 9: Version Tag - Git tag v{BUILD_NUMBER}]
-    R --> S[Pipeline Success - App is Live]
-    S --> T[Send Success Notification]
-    H --> U[Send Failure Notification]
-    N --> U
-    Q --> U
